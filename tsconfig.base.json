@@ -14,7 +14,9 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@yhiguchi-dev/kakeibo-ui": ["packages/kakeibo-ui/src/index.ts"]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }
