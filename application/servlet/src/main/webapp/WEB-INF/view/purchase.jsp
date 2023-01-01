@@ -12,20 +12,22 @@ taglib prefix="c" uri="jakarta.tags.core" %>
       integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
       crossorigin="anonymous"
     />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css"
+    />
   </head>
   <body>
     <header class="navbar navbar-expand navbar-light bg-light">
-      <div class="container-fluid w-50">
-        <div class="d-flex flex-row align-items-center">
-          <a class="navbar-brand" href="https://www.solxyz.co.jp/">
-            <img
-              src="http://localhost:8080/logo.svg"
-              alt="solxyz-logo"
-              class="h3"
-            />
-          </a>
-          <h1 class="h3">購買管理</h1>
-        </div>
+      <div class="d-flex align-items-center">
+        <a class="navbar-brand" href="https://www.solxyz.co.jp/">
+          <img
+            src="http://localhost:8080/logo.svg"
+            alt="solxyz-logo"
+            class="h3"
+          />
+        </a>
+        <h1 class="h3" style="width: 8rem">購買管理</h1>
       </div>
       <div class="container px-2 d-flex">
         <ul class="navbar-nav">

@@ -24,7 +24,7 @@ taglib prefix="c" uri="jakarta.tags.core" %>
               class="h3"
             />
           </a>
-          <h1 class="h3">購買管理</h1>
+          <h1 class="h3" style="width: 8rem">購買管理</h1>
         </div>
       </div>
     </header>
