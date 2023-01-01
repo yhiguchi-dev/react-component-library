@@ -57,7 +57,7 @@ taglib prefix="c" uri="jakarta.tags.core" %>
         class="form-inline align-items-start"
         novalidate
       >
-        <div class="row g-3">
+        <div class="row">
           <div class="col-sm-3">
             <input
               type="search"
@@ -69,9 +69,11 @@ taglib prefix="c" uri="jakarta.tags.core" %>
             />
             <div class="invalid-feedback">入力内容に誤りがあります</div>
           </div>
-          <button type="submit" class="btn btn-primary ml-2 col-sm-1">
-            <i class="bi bi-search"></i>
-          </button>
+            <div class="col-sm-3">
+              <button type="submit" class="btn btn-primary btn-lg">
+                <i class="bi bi-search"></i>
+              </button>
+            </div>
         </div>
       </form>
       <div id="items" class="w-50">
