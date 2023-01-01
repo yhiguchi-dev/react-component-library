@@ -18,9 +18,9 @@ taglib prefix="c" uri="jakarta.tags.core" %>
     />
   </head>
   <body>
-    <header class="navbar navbar-light bg-light">
-      <div class="container">
-        <div class="d-flex align-items-center">
+    <header class="navbar navbar-expand navbar-light bg-light">
+      <div class="container-fluid w-50">
+        <div class="d-flex flex-row align-items-center">
           <a class="navbar-brand" href="https://www.solxyz.co.jp/">
             <img
               src="http://localhost:8080/logo.svg"
@@ -30,6 +30,25 @@ taglib prefix="c" uri="jakarta.tags.core" %>
           </a>
           <h1 class="h3">購買管理</h1>
         </div>
+      </div>
+      <div class="container px-2 d-flex">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" href="/app/home">
+              <i class="bi bi-house"></i> HOME</a
+            >
+          </li>
+        </ul>
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <form action="/app/logout" method="post" novalidate>
+              <button type="submit" class="btn btn-outline-secondary">
+                <i class="bi bi-door-closed"></i>
+                ログアウト
+              </button>
+            </form>
+          </li>
+        </ul>
       </div>
     </header>
     <div class="container py-3 px-0">

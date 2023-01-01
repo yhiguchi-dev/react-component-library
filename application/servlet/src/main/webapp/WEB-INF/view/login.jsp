@@ -31,7 +31,7 @@ taglib prefix="c" uri="jakarta.tags.core" %>
     <div class="container py-3 px-0">
       <div class="w-25 mx-auto">
         <h1 class="h3">ログイン</h1>
-        <form action="/app/login" method="post" novalidate>
+        <form id="login_form" action="/app/login" method="post" novalidate>
           <div class="form-floating">
             <input
               type="email"
@@ -121,7 +121,7 @@ taglib prefix="c" uri="jakarta.tags.core" %>
         return false;
       };
       const validateOnSubmit = () => {
-        const form = document.querySelector("form");
+        const form = document.getElementById("login_form");
         form.addEventListener("submit", (event) => {
           const array = [isValidEmail(), isValidPassword()];
           if (array.every((isValid) => isValid === true)) {

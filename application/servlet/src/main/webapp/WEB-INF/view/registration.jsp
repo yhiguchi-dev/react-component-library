@@ -31,7 +31,12 @@ taglib prefix="c" uri="jakarta.tags.core" %>
     <div class="container py-3 px-0">
       <div class="w-25 mx-auto">
         <h1 class="h3">新規登録</h1>
-        <form action="/app/registration" method="post" novalidate>
+        <form
+          id="registration_form"
+          action="/app/registration"
+          method="post"
+          novalidate
+        >
           <div class="form-floating">
             <input
               type="email"
@@ -174,7 +179,7 @@ taglib prefix="c" uri="jakarta.tags.core" %>
         }
       };
       const validateOnSubmit = () => {
-        const form = document.querySelector("form");
+        const form = document.getElementById("registration_form");
         form.addEventListener("submit", (event) => {
           const array = [
             isValidEmail(),
