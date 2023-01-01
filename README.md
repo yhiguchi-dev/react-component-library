@@ -4,6 +4,10 @@
 
 アプリケーションの起動にDocker/Docker Composeを利用します。
 
+- WSL2
+    - Windowsユーザーの方は導入してください
+    - Linuxディストリビューションは`ubuntu`を利用してください
+    - <https://learn.microsoft.com/ja-jp/windows/wsl/install>
 - Docker
   - <https://www.docker.com/>
 
@@ -12,6 +16,8 @@
     - <https://pnpm.io/ja/>
     - npmでも可
   - Node.js
+    - pnpmでも導入できます
+      - <https://pnpm.io/ja/cli/env>
 
 ## 開発環境
 
@@ -22,6 +28,8 @@ IDEは好きなものを利用してください
 ## 利用方法
 
 `docker compose`コマンドでビルド/起動を行います
+
+Windowsユーザーの方はWSLターミナル上でコマンド実行してください
 
 ### ビルド
 
