@@ -141,7 +141,9 @@ taglib prefix="c" uri="jakarta.tags.core" %>
                     name="address3"
                     required
                   />
-                  <div class="invalid-feedback">丁目／番地／号を入力してください</div>
+                  <div class="invalid-feedback">
+                    丁目／番地／号を入力してください
+                  </div>
                 </div>
                 <button class="btn btn-primary" type="submit">購入</button>
               </div>
@@ -186,7 +188,7 @@ taglib prefix="c" uri="jakarta.tags.core" %>
       const fillItem = () => {
         const itemName = '<%=request.getAttribute("item_name") %>';
         const price = '<%=request.getAttribute("price") %>';
-        console.log(itemName)
+        console.log(itemName);
         const itemNameEl = document.getElementById("item_name");
         itemNameEl.innerHTML = itemName;
         const priceEl = document.getElementById("price");

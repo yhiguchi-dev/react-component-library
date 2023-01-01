@@ -24,10 +24,10 @@ public class UserDataSource implements UserRepository {
   void insert(User user) {
     String sql =
         """
-            INSERT INTO purchase.user(
+            INSERT INTO purchase."user"(
               id,
               email_address,
-              password
+              "password"
             ) VALUES (
               ?,
               ?,
@@ -56,8 +56,8 @@ public class UserDataSource implements UserRepository {
             SELECT
               id,
               email_address,
-              password
-            FROM purchase.user
+              "password"
+            FROM purchase."user"
             WHERE
               email_address = ?;
             """;

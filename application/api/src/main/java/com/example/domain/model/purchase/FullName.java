@@ -9,7 +9,15 @@ public class FullName {
     this.lastName = lastName;
   }
 
+  public FirstName firstName() {
+    return firstName;
+  }
+
+  public LastName lastName() {
+    return lastName;
+  }
+
   public String name() {
-    return lastName.value() + firstName.value();
+    return lastName.value() + " " + firstName.value();
   }
 }
