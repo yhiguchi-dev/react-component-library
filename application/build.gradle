@@ -1,0 +1,20 @@
+plugins {
+	id "com.diffplug.spotless"
+}
+
+repositories {
+	mavenCentral()
+}
+
+spotless {
+	java {
+		target '**/src/**/*.java'
+		importOrder()
+		removeUnusedImports()
+		googleJavaFormat()
+	}
+	groovyGradle {
+		target '*.gradle'
+		greclipse()
+	}
+}

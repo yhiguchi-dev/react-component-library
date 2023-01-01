@@ -1,0 +1,32 @@
+FROM amazoncorretto:17 as setup-builder
+
+WORKDIR /build
+
+RUN curl -o redisson-all.jar https://repo1.maven.org/maven2/org/redisson/redisson-all/3.19.0/redisson-all-3.19.0.jar
+RUN curl -o redisson-tomcat.jar https://repo1.maven.org/maven2/org/redisson/redisson-tomcat-10/3.19.0/redisson-tomcat-10-3.19.0.jar
+
+WORKDIR /app
+
+COPY gradle/ ./gradle/
+COPY *.gradle gradlew ./
+COPY servlet/build.gradle servlet/build.gradle
+COPY api/build.gradle api/build.gradle
+
+RUN ./gradlew dependencies
+
+FROM tomcat:10.1.4-jre17-temurin-jammy as runtime
+
+COPY ./servlet/setenv.sh $CATALINA_HOME/bin/
+COPY ./servlet/redisson.conf $CATALINA_HOME/conf
+COPY --from=setup-builder /build/*.jar $CATALINA_HOME/lib
+
+FROM setup-builder as builder
+
+COPY servlet/src/ servlet/src/
+COPY api/src/ api/src/
+
+RUN ./gradlew clean servlet:build -x servlet:check
+
+FROM runtime
+
+COPY --from=builder /app/servlet/build/libs/*.war $CATALINA_HOME/webapps/

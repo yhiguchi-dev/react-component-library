@@ -1,0 +1,16 @@
+{
+	"type": "module",
+	"imports": {
+		"#script/*": "./script/*.js"
+	},
+	"devDependencies": {
+		"@faker-js/faker": "^7.6.0",
+		"prettier": "^2.8.1"
+	},
+	"scripts": {
+		"format": "script/format.sh",
+		"testData": "node script/testData.js",
+		"lint": "prettier --check --ignore-path .gitignore '{**/*,*}.{html,js}'",
+		"fix": "prettier --write --ignore-path .gitignore '{**/*,*}.{html,js}'"
+	}
+}

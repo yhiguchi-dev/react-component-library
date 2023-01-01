@@ -1,0 +1,25 @@
+FROM amazoncorretto:17 as setup-builder
+
+WORKDIR /app
+
+COPY gradle/ ./gradle/
+COPY *.gradle gradlew ./
+COPY springboot/build.gradle springboot/build.gradle
+COPY api/build.gradle api/build.gradle
+
+RUN ./gradlew dependencies
+
+FROM setup-builder as builder
+
+COPY springboot/src/ springboot/src/
+COPY api/src/ api/src/
+
+RUN ./gradlew clean springboot:build -x springboot:check
+
+FROM amazoncorretto:17 as runtime
+
+WORKDIR /app
+
+COPY --from=builder /app/springboot/build/libs/*.jar ./
+
+ENTRYPOINT ["java", "-jar", "app.jar"]
