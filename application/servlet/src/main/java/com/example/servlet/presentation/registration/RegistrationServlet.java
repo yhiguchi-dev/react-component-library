@@ -31,7 +31,7 @@ public class RegistrationServlet extends HttpServlet implements ViewForwardable,
   }
 
   @Override
-  public void doGet(HttpServletRequest request, HttpServletResponse response)
+  protected void doGet(HttpServletRequest request, HttpServletResponse response)
       throws IOException, ServletException {
     forward("registration", request, response);
   }

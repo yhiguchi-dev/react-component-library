@@ -116,6 +116,16 @@ taglib prefix="c" uri="jakarta.tags.core" %>
       crossorigin="anonymous"
     ></script>
     <script>
+      const isValidItemName = () => {
+        const itemName = document.getElementById("item_name");
+        if (itemName.validity.valid) {
+          itemName.className = "form-control is-valid";
+          return true;
+        }
+        itemName.className = "form-control is-invalid";
+        return false;
+      };
+
       const validateOnLoad = (callback) => {
         const errorMessage = '<%=request.getAttribute("errorMessage") %>';
         const errorMessageEl = document.getElementById("errorMessage");
@@ -126,15 +136,7 @@ taglib prefix="c" uri="jakarta.tags.core" %>
           }
         });
       };
-      const isValidItemName = () => {
-        const itemName = document.getElementById("item_name");
-        if (itemName.validity.valid) {
-          itemName.className = "form-control is-valid";
-          return true;
-        }
-        itemName.className = "form-control is-invalid";
-        return false;
-      };
+
       const validateOnSubmit = () => {
         const form = document.getElementById("item_form");
         form.addEventListener("submit", (event) => {
@@ -145,6 +147,7 @@ taglib prefix="c" uri="jakarta.tags.core" %>
           event.preventDefault();
         });
       };
+
       const paginate = ({ current, perPage, totalCount }) => {
         const division = Math.floor(totalCount / perPage);
         const max = totalCount % perPage > 0 ? division + 1 : division;
@@ -172,19 +175,8 @@ taglib prefix="c" uri="jakarta.tags.core" %>
         }
         return { current, items };
       };
-      (() => {
-        const toastElList = [].slice.call(document.querySelectorAll(".toast"));
-        const toastList = toastElList.map((toastEl) => {
-          return new bootstrap.Toast(toastEl, {
-            delay: 5000,
-            autohide: true,
-          });
-        });
-        const callback = () => {
-          toastList[0].show();
-        };
-        validateOnLoad(callback);
-        validateOnSubmit();
+
+      const createTable = () => {
         const resultJson = '<%=request.getAttribute("resultJson") %>';
         const itemsEl = document.getElementById("items");
         if (resultJson === "null") {
@@ -256,6 +248,22 @@ taglib prefix="c" uri="jakarta.tags.core" %>
           liEl.appendChild(aEl);
           paginationUlEl.appendChild(liEl);
         });
+      };
+
+      (() => {
+        const toastElList = [].slice.call(document.querySelectorAll(".toast"));
+        const toastList = toastElList.map((toastEl) => {
+          return new bootstrap.Toast(toastEl, {
+            delay: 5000,
+            autohide: true,
+          });
+        });
+        const callback = () => {
+          toastList[0].show();
+        };
+        validateOnLoad(callback);
+        validateOnSubmit();
+        createTable();
       })();
     </script>
   </body>

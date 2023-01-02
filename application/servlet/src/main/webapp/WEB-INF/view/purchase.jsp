@@ -114,6 +114,7 @@ taglib prefix="c" uri="jakarta.tags.core" %>
                       id="zip_code"
                       placeholder="ハイフンなしで入力してください"
                       name="zip_code"
+                      pattern="[0-9]+"
                       required
                     />
                     <button
@@ -201,25 +202,6 @@ taglib prefix="c" uri="jakarta.tags.core" %>
       crossorigin="anonymous"
     ></script>
     <script async="true">
-      const validateOnLoad = (callback) => {
-        const errorMessage = '<%=request.getAttribute("errorMessage") %>';
-        const errorMessageEl = document.getElementById("errorMessage");
-        window.addEventListener("load", () => {
-          if (errorMessage && errorMessage !== "null") {
-            errorMessageEl.innerHTML = errorMessage;
-            callback();
-          }
-        });
-      };
-      const fillItem = () => {
-        const itemName = '<%=request.getAttribute("item_name") %>';
-        const price = '<%=request.getAttribute("price") %>';
-        console.log(itemName);
-        const itemNameEl = document.getElementById("item_name");
-        itemNameEl.innerHTML = itemName;
-        const priceEl = document.getElementById("price");
-        priceEl.innerHTML = "￥" + price;
-      };
       const isValidLastName = () => {
         const lastName = document.getElementById("last_name");
         if (lastName.validity.valid) {
@@ -275,6 +257,88 @@ taglib prefix="c" uri="jakarta.tags.core" %>
         address.className = "form-control is-invalid";
         return false;
       };
+
+      const validateOnLoad = (callback) => {
+        const errorMessage = '<%=request.getAttribute("errorMessage") %>';
+        const errorMessageEl = document.getElementById("errorMessage");
+        window.addEventListener("load", () => {
+          if (errorMessage && errorMessage !== "null") {
+            errorMessageEl.innerHTML = errorMessage;
+            callback();
+          }
+        });
+      };
+
+      const validateLastName = () => {
+        const lastName = document.getElementById("last_name");
+        lastName.addEventListener("input", () => {
+          isValidLastName();
+        });
+      };
+
+      const validateFirstName = () => {
+        const firstName = document.getElementById("first_name");
+        firstName.addEventListener("input", () => {
+          isValidFirstName();
+        });
+      };
+
+      const validateZipCode = () => {
+        const zipCode = document.getElementById("zip_code");
+        zipCode.addEventListener("input", () => {
+          isValidZipCode();
+        });
+      };
+
+      const validateAddress = () => {
+        const address = document.getElementById("address");
+        address.addEventListener("input", () => {
+          isValidAddress();
+        });
+      };
+
+      const validateAddress2 = () => {
+        const address2 = document.getElementById("address2");
+        address2.addEventListener("input", () => {
+          isValidAddress2();
+        });
+      };
+
+      const validateAddress3 = () => {
+        const address3 = document.getElementById("address3");
+        address3.addEventListener("input", () => {
+          isValidAddress3();
+        });
+      };
+
+      const validateOnSubmit = () => {
+        const form = document.getElementById("purchase_form");
+        form.addEventListener("submit", (event) => {
+          const array = [
+            isValidLastName(),
+            isValidFirstName(),
+            isValidZipCode(),
+            isValidAddress(),
+            isValidAddress2(),
+            isValidAddress3(),
+          ];
+          if (array.every((isValid) => isValid === true)) {
+            return;
+          }
+          event.preventDefault();
+        });
+      };
+
+      const fillItem = () => {
+        const itemName = '<%=request.getAttribute("item_name") %>';
+        const price = '<%=request.getAttribute("price") %>';
+        console.log(itemName);
+        const itemNameEl = document.getElementById("item_name");
+        itemNameEl.innerHTML = itemName;
+        const priceEl = document.getElementById("price");
+        priceEl.innerHTML = "￥" + price;
+      };
+
       const getAddress = async (zipCode) => {
         const data = {
           zipcode: zipCode,
@@ -288,6 +352,7 @@ taglib prefix="c" uri="jakarta.tags.core" %>
         }
         return await response.json();
       };
+
       const fillAddress = async () => {
         if (!isValidZipCode()) {
           return;
@@ -313,23 +378,7 @@ taglib prefix="c" uri="jakarta.tags.core" %>
         isValidAddress3();
         console.log(JSON.stringify(results));
       };
-      const validateOnSubmit = () => {
-        const form = document.getElementById("purchase_form");
-        form.addEventListener("submit", (event) => {
-          const array = [
-            isValidLastName(),
-            isValidFirstName(),
-            isValidZipCode(),
-            isValidAddress(),
-            isValidAddress2(),
-            isValidAddress3(),
-          ];
-          if (array.every((isValid) => isValid === true)) {
-            return;
-          }
-          event.preventDefault();
-        });
-      };
+
       (() => {
         const toastElList = [].slice.call(document.querySelectorAll(".toast"));
         const toastList = toastElList.map((toastEl) => {
@@ -342,32 +391,14 @@ taglib prefix="c" uri="jakarta.tags.core" %>
           toastList[0].show();
         };
         validateOnLoad(callback);
-        const lastName = document.getElementById("last_name");
-        lastName.addEventListener("input", () => {
-          isValidLastName();
-        });
+        validateLastName();
+        validateFirstName();
+        validateZipCode();
+        validateAddress();
+        validateAddress2();
+        validateAddress3();
+        validateOnSubmit();
         fillItem();
-        const firstName = document.getElementById("first_name");
-        firstName.addEventListener("input", () => {
-          isValidFirstName();
-        });
-        const zipCode = document.getElementById("zip_code");
-        zipCode.addEventListener("input", () => {
-          isValidZipCode();
-        });
-        const address = document.getElementById("address");
-        address.addEventListener("input", () => {
-          isValidAddress();
-        });
-        const address2 = document.getElementById("address2");
-        address2.addEventListener("input", () => {
-          isValidAddress2();
-        });
-        const address3 = document.getElementById("address3");
-        address3.addEventListener("input", () => {
-          isValidAddress3();
-        });
-        validateOnSubmit(callback);
       })();
     </script>
   </body>

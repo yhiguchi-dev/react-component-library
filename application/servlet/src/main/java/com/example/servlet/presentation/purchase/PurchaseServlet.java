@@ -44,7 +44,7 @@ public class PurchaseServlet extends HttpServlet implements ViewForwardable, Vie
   }
 
   @Override
-  public void doGet(HttpServletRequest request, HttpServletResponse response)
+  protected void doGet(HttpServletRequest request, HttpServletResponse response)
       throws IOException, ServletException {
     String itemName = request.getParameter("item_name");
     String price = request.getParameter("price");

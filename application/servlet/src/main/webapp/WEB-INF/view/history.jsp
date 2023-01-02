@@ -96,22 +96,12 @@ taglib prefix="c" uri="jakarta.tags.core" %>
           }
         });
       };
-      (() => {
-        const toastElList = [].slice.call(document.querySelectorAll(".toast"));
-        const toastList = toastElList.map((toastEl) => {
-          return new bootstrap.Toast(toastEl, {
-            delay: 5000,
-            autohide: true,
-          });
-        });
-        const callback = () => {
-          toastList[0].show();
-        };
-        validateOnLoad(callback);
+
+      const createTable = () => {
         const resultJson = '<%=request.getAttribute("resultJson") %>';
-        const itemsEl = document.getElementById("items");
+        const historiesEl = document.getElementById("histories");
         if (resultJson === "null") {
-          itemsEl.className = "d-none";
+          historiesEl.className = "d-none";
           return;
         }
         const parsed = JSON.parse(resultJson);
@@ -159,6 +149,21 @@ taglib prefix="c" uri="jakarta.tags.core" %>
           trEl.appendChild(priceTdEl);
           historyTableBodyEl.appendChild(trEl);
         });
+      };
+
+      (() => {
+        const toastElList = [].slice.call(document.querySelectorAll(".toast"));
+        const toastList = toastElList.map((toastEl) => {
+          return new bootstrap.Toast(toastEl, {
+            delay: 5000,
+            autohide: true,
+          });
+        });
+        const callback = () => {
+          toastList[0].show();
+        };
+        validateOnLoad(callback);
+        createTable();
       })();
     </script>
   </body>

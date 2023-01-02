@@ -92,6 +92,26 @@ taglib prefix="c" uri="jakarta.tags.core" %>
       crossorigin="anonymous"
     ></script>
     <script>
+      const isValidEmail = () => {
+        const email = document.getElementById("email");
+        if (email.validity.valid) {
+          email.className = "form-control";
+          return true;
+        }
+        email.className = "form-control is-invalid";
+        return false;
+      };
+
+      const isValidPassword = () => {
+        const password = document.getElementById("password");
+        if (password.validity.valid) {
+          password.className = "form-control";
+          return true;
+        }
+        password.className = "form-control is-invalid";
+        return false;
+      };
+
       const validateOnLoad = (callback) => {
         const errorMessage = '<%=request.getAttribute("errorMessage") %>';
         const errorMessageEl = document.getElementById("errorMessage");
@@ -102,24 +122,21 @@ taglib prefix="c" uri="jakarta.tags.core" %>
           }
         });
       };
-      const isValidEmail = () => {
+
+      const validateEmail = () => {
         const email = document.getElementById("email");
-        if (email.validity.valid) {
-          email.className = "form-control";
-          return true;
-        }
-        email.className = "form-control is-invalid";
-        return false;
+        email.addEventListener("input", () => {
+          isValidEmail();
+        });
       };
-      const isValidPassword = () => {
+
+      const validatePassword = () => {
         const password = document.getElementById("password");
-        if (password.validity.valid) {
-          password.className = "form-control";
-          return true;
-        }
-        password.className = "form-control is-invalid";
-        return false;
+        password.addEventListener("input", () => {
+          isValidPassword();
+        });
       };
+
       const validateOnSubmit = () => {
         const form = document.getElementById("login_form");
         form.addEventListener("submit", (event) => {
@@ -130,6 +147,7 @@ taglib prefix="c" uri="jakarta.tags.core" %>
           event.preventDefault();
         });
       };
+
       (() => {
         const toastElList = [].slice.call(document.querySelectorAll(".toast"));
         const toastList = toastElList.map((toastEl) => {
@@ -142,14 +160,8 @@ taglib prefix="c" uri="jakarta.tags.core" %>
           toastList[0].show();
         };
         validateOnLoad(callback);
-        const email = document.getElementById("email");
-        email.addEventListener("input", () => {
-          isValidEmail();
-        });
-        const password = document.getElementById("password");
-        password.addEventListener("input", () => {
-          isValidPassword();
-        });
+        validateEmail();
+        validatePassword();
         validateOnSubmit();
       })();
     </script>

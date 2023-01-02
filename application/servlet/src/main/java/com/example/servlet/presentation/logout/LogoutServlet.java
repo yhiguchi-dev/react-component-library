@@ -14,7 +14,7 @@ import java.io.IOException;
 public class LogoutServlet extends HttpServlet implements ViewForwardable, ViewRedirectable {
 
   @Override
-  public void doPost(HttpServletRequest request, HttpServletResponse response)
+  protected void doPost(HttpServletRequest request, HttpServletResponse response)
       throws IOException, ServletException {
     HttpSession session = request.getSession();
     session.invalidate();

@@ -122,16 +122,6 @@ taglib prefix="c" uri="jakarta.tags.core" %>
       crossorigin="anonymous"
     ></script>
     <script>
-      const validateOnLoad = (callback) => {
-        const errorMessage = '<%=request.getAttribute("errorMessage") %>';
-        const errorMessageEl = document.getElementById("errorMessage");
-        window.addEventListener("load", () => {
-          if (errorMessage && errorMessage !== "null") {
-            errorMessageEl.innerHTML = errorMessage;
-            callback();
-          }
-        });
-      };
       const isValidEmail = () => {
         const email = document.getElementById("email");
         if (email.validity.valid) {
@@ -141,6 +131,7 @@ taglib prefix="c" uri="jakarta.tags.core" %>
         email.className = "form-control is-invalid";
         return false;
       };
+
       const isValidPassword = () => {
         const password = document.getElementById("password");
         if (password.validity.valid) {
@@ -150,6 +141,7 @@ taglib prefix="c" uri="jakarta.tags.core" %>
         password.className = "form-control is-invalid";
         return false;
       };
+
       const isValidPasswordConfirmation = () => {
         const password = document.getElementById("password");
         const passwordConfirmation = document.getElementById(
@@ -165,19 +157,41 @@ taglib prefix="c" uri="jakarta.tags.core" %>
         passwordConfirmation.className = "form-control is-invalid";
         return false;
       };
-      const passwordHideOrShow = () => {
+
+      const validateOnLoad = (callback) => {
+        const errorMessage = '<%=request.getAttribute("errorMessage") %>';
+        const errorMessageEl = document.getElementById("errorMessage");
+        window.addEventListener("load", () => {
+          if (errorMessage && errorMessage !== "null") {
+            errorMessageEl.innerHTML = errorMessage;
+            callback();
+          }
+        });
+      };
+
+      const validateEmail = () => {
+        const email = document.getElementById("email");
+        email.addEventListener("input", () => {
+          isValidEmail();
+        });
+      };
+
+      const validatePassword = () => {
         const password = document.getElementById("password");
+        password.addEventListener("input", () => {
+          isValidPassword();
+        });
+      };
+
+      const validatePasswordConfirmation = () => {
         const passwordConfirmation = document.getElementById(
           "passwordConfirmation"
         );
-        if (password.type === "password") {
-          password.type = "text";
-          passwordConfirmation.type = "text";
-        } else {
-          password.type = "password";
-          passwordConfirmation.type = "password";
-        }
+        passwordConfirmation.addEventListener("input", () => {
+          isValidPasswordConfirmation();
+        });
       };
+
       const validateOnSubmit = () => {
         const form = document.getElementById("registration_form");
         form.addEventListener("submit", (event) => {
@@ -192,6 +206,21 @@ taglib prefix="c" uri="jakarta.tags.core" %>
           event.preventDefault();
         });
       };
+
+      const passwordHideOrShow = () => {
+        const password = document.getElementById("password");
+        const passwordConfirmation = document.getElementById(
+          "passwordConfirmation"
+        );
+        if (password.type === "password") {
+          password.type = "text";
+          passwordConfirmation.type = "text";
+        } else {
+          password.type = "password";
+          passwordConfirmation.type = "password";
+        }
+      };
+
       (() => {
         const toastElList = [].slice.call(document.querySelectorAll(".toast"));
         const toastList = toastElList.map((toastEl) => {
@@ -204,20 +233,9 @@ taglib prefix="c" uri="jakarta.tags.core" %>
           toastList[0].show();
         };
         validateOnLoad(callback);
-        const email = document.getElementById("email");
-        email.addEventListener("input", () => {
-          isValidEmail();
-        });
-        const password = document.getElementById("password");
-        password.addEventListener("input", () => {
-          isValidPassword();
-        });
-        const passwordConfirmation = document.getElementById(
-          "passwordConfirmation"
-        );
-        passwordConfirmation.addEventListener("input", () => {
-          isValidPasswordConfirmation();
-        });
+        validateEmail();
+        validatePassword();
+        validatePasswordConfirmation();
         validateOnSubmit();
       })();
     </script>

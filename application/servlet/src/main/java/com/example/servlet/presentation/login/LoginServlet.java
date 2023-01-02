@@ -33,7 +33,7 @@ public class LoginServlet extends HttpServlet implements ViewForwardable, ViewRe
   }
 
   @Override
-  public void doGet(HttpServletRequest request, HttpServletResponse response)
+  protected void doGet(HttpServletRequest request, HttpServletResponse response)
       throws IOException, ServletException {
     forward("login", request, response);
   }

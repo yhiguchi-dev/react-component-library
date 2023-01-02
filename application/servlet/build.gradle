@@ -26,8 +26,6 @@ dependencies {
     implementation 'org.glassfish.web:jakarta.servlet.jsp.jstl:3.0.1'
     implementation 'org.springframework.security:spring-security-core:6.0.1'
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.14.1'
-    runtimeOnly 'org.slf4j:slf4j-api:2.0.6'
-    runtimeOnly 'org.slf4j:slf4j-simple:2.0.6'
     runtimeOnly 'org.postgresql:postgresql:42.5.1'
     implementation(project(':api'))
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.1'
