@@ -4,10 +4,9 @@ import com.example.domain.model.item.Item;
 import com.example.domain.model.item.ItemIdentifier;
 import com.example.domain.model.item.ItemName;
 import com.example.domain.model.item.ItemRepository;
+import com.example.domain.model.item.exception.ItemNotFoundException;
 import com.example.domain.model.purchase.*;
 import com.example.domain.model.user.UserIdentifier;
-import com.example.domain.model.user.exception.PasswordUnMatchException;
-import com.example.domain.model.user.exception.UserNotFoundException;
 import com.example.servlet.application.service.PurchaseRegistrationService;
 import com.example.servlet.application.service.item.ItemService;
 import com.example.servlet.application.service.purchase.PurchaseService;
@@ -25,12 +24,16 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Objects;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @WebServlet(name = "purchaseServlet", value = "/purchase")
 public class PurchaseServlet extends HttpServlet implements ViewForwardable, ViewRedirectable {
 
   ItemService itemService;
   PurchaseRegistrationService purchaseRegistrationService;
+
+  Logger log = LoggerFactory.getLogger(PurchaseServlet.class);
 
   @Override
   public void init(ServletConfig config) throws ServletException {
@@ -48,18 +51,23 @@ public class PurchaseServlet extends HttpServlet implements ViewForwardable, Vie
       throws IOException, ServletException {
     String itemName = request.getParameter("item_name");
     String price = request.getParameter("price");
-    System.out.println(itemName);
-    System.out.println(price);
     if (Objects.isNull(itemName) || Objects.isNull(price)) {
+      request.setAttribute("errorMessage", "商品が見つかりません");
       forward("purchase", request, response);
       return;
     }
     request.setAttribute("item_name", itemName);
     request.setAttribute("price", price);
-    Item item = itemService.get(new ItemName(itemName));
-    HttpSession session = request.getSession();
-    session.setAttribute("itemIdentifier", item.itemIdentifier().value());
-    forward("purchase", request, response);
+    try {
+      Item item = itemService.get(new ItemName(itemName));
+      HttpSession session = request.getSession();
+      session.setAttribute("itemIdentifier", item.itemIdentifier().value());
+      forward("purchase", request, response);
+    } catch (ItemNotFoundException e) {
+      log.warn(e.getMessage());
+      request.setAttribute("errorMessage", "商品が見つかりません");
+      forward("purchase", request, response);
+    }
   }
 
   @Override
@@ -83,10 +91,14 @@ public class PurchaseServlet extends HttpServlet implements ViewForwardable, Vie
         purchaseRegistrationService.register(
             userIdentifier, itemIdentifier, fullName, addressValue);
         session.removeAttribute("itemIdentifier");
+        redirect("item", request, response);
+        return;
       }
-      redirect("item", request, response);
-    } catch (UserNotFoundException | PasswordUnMatchException e) {
-      request.setAttribute("errorMessage", "購入に失敗しました");
+      request.setAttribute("errorMessage", "商品の指定がありません");
+      forward("purchase", request, response);
+    } catch (ItemNotFoundException e) {
+      log.warn(e.getMessage());
+      request.setAttribute("errorMessage", "商品が見つかりません");
       forward("purchase", request, response);
     }
   }

@@ -4,22 +4,22 @@ WORKDIR /app
 
 COPY gradle/ ./gradle/
 COPY *.gradle gradlew ./
-COPY springboot/build.gradle springboot/build.gradle
+COPY spring-boot/build.gradle spring-boot/build.gradle
 COPY api/build.gradle api/build.gradle
 
-RUN ./gradlew springboot:dependencies
+RUN ./gradlew spring-boot:dependencies
 
 FROM setup-builder as builder
 
-COPY springboot/src/ springboot/src/
+COPY spring-boot/src/ spring-boot/src/
 COPY api/src/ api/src/
 
-RUN ./gradlew clean --build-cache springboot:build -x springboot:check
+RUN ./gradlew clean --build-cache spring-boot:build -x spring-boot:check
 
 FROM amazoncorretto:17 as runtime
 
 WORKDIR /app
 
-COPY --from=builder /app/springboot/build/libs/*.jar ./
+COPY --from=builder /app/spring-boot/build/libs/*.jar ./
 
 ENTRYPOINT ["java", "-jar", "app.jar"]

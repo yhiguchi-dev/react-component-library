@@ -49,6 +49,7 @@ public class RegistrationServlet extends HttpServlet implements ViewForwardable,
       userRegistrationService.register(email, password);
       redirect("login", request, response);
     } catch (UserAlreadyExistsException e) {
+      log.warn(e.getMessage());
       request.setAttribute("errorMessage", "新規登録に失敗しました");
       forward("registration", request, response);
     }

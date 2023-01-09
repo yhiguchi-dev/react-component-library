@@ -10,6 +10,6 @@ pluginManagement {
 }
 rootProject.name = 'application'
 include 'servlet'
-include 'springboot'
+include 'spring-boot'
 include 'api'
 

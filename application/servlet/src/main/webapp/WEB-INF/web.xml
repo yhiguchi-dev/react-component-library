@@ -11,4 +11,8 @@
         <error-code>503</error-code>
         <location>/503.html</location>
     </error-page>
+    <error-page>
+        <exception-type>java.lang.Exception</exception-type>
+        <location>/error.html</location>
+    </error-page>
 </web-app>
