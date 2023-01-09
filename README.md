@@ -29,15 +29,15 @@ IDEは好きなものを利用してください
 
 ```text
 .
-├── application     -- アプリケーション
-│   ├── api      -- APIモジュール
-│   ├── servlet     -- サーブレット用モジュール
-│   └── spring-boot    -- SpringBoot用モジュール
-├── database  -- データベース
+├── application -- アプリケーション
+│   ├── api -- APIモジュール
+│   ├── servlet -- サーブレット用モジュール
+│   └── spring-boot -- SpringBoot用モジュール
+├── database -- データベース
 │   └── migration
-├── load-balancer      -- ロードバランサー
+├── load-balancer -- ロードバランサー
 │   └── images
-└── script       -- スクリプト用ディレクトリ
+└── script -- スクリプト用ディレクトリ
 ```
 
 ## 利用方法
