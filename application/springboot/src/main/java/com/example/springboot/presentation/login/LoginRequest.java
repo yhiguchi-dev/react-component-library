@@ -2,6 +2,7 @@ package com.example.springboot.presentation.login;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import java.io.Serializable;
 
 public class LoginRequest implements Serializable {
@@ -10,6 +11,7 @@ public class LoginRequest implements Serializable {
   String email;
 
   @NotBlank(message = "パスワードを入力してください")
+  @Pattern(regexp = "^[a-zA-Z\\d]{8,60}$")
   String password;
 
   public String getEmail() {

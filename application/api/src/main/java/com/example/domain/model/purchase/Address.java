@@ -13,6 +13,8 @@ public class Address {
     this.street = street;
   }
 
+  Address() {}
+
   public String zipCode() {
     return zipCode;
   }

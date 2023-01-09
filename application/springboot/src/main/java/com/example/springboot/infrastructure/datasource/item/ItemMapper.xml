@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.springboot.infrastructure.datasource.item.ItemMapper">
+
+    <resultMap id="Item" type="com.example.domain.model.item.Item">
+        <id property="itemIdentifier.value" column="id" />
+        <result property="itemName.value" column="name"/>
+        <result property="price.value" column="price"/>
+    </resultMap>
+
+    <select id="selectById" resultMap="Item">
+        SELECT
+          id,
+          name,
+          price
+        FROM purchase.item
+        WHERE
+          id = #{itemIdentifier.value}
+    </select>
+
+    <select id="selectByName" resultMap="Item">
+        SELECT
+          id,
+          name,
+          price
+        FROM purchase.item
+        WHERE
+          name = #{itemName.value}
+    </select>
+
+    <select id="selectBy" resultMap="Item">
+        SELECT
+          id,
+          name,
+          price
+        FROM purchase.item
+        WHERE
+          name LIKE CONCAT(#{itemCriteria.itemName}, '%')
+        ORDER BY id
+        LIMIT #{itemCriteria.perPage}
+        OFFSET #{itemCriteria.offset}
+    </select>
+
+    <select id="selectCount" resultType="int">
+        SELECT
+          COUNT(*)
+        FROM purchase.item
+        WHERE
+          name LIKE CONCAT(#{itemCriteria.itemName}, '%')
+    </select>
+</mapper>

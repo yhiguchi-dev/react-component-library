@@ -10,6 +10,8 @@ public class UserIdentifier {
     this.value = value;
   }
 
+  UserIdentifier() {}
+
   public String value() {
     return value;
   }

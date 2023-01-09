@@ -49,16 +49,16 @@ public class PurchaseDataSource implements PurchaseRepository {
   void insertTransaction(Connection connection, Purchase purchase) {
     String sql =
         """
-                    INSERT INTO purchase.transaction(
-                      id,
-                      user_id,
-                      item_id
-                    ) VALUES (
-                      ?,
-                      ?,
-                      ?
-                    );
-                    """;
+        INSERT INTO purchase.transaction(
+          id,
+          user_id,
+          item_id
+        ) VALUES (
+          ?,
+          ?,
+          ?
+        );
+        """;
     try (PreparedStatement statement = connection.prepareStatement(sql)) {
       statement.setString(1, purchase.purchaseIdentifier().value());
       statement.setString(2, purchase.userIdentifier().value());
@@ -72,20 +72,20 @@ public class PurchaseDataSource implements PurchaseRepository {
   void insertAddress(Connection connection, Purchase purchase) {
     String sql =
         """
-                    INSERT INTO purchase.address(
-                      transaction_id,
-                      zip_code,
-                      prefecture,
-                      city,
-                      street
-                    ) VALUES (
-                      ?,
-                      ?,
-                      ?,
-                      ?,
-                      ?
-                    );
-                    """;
+        INSERT INTO purchase.address(
+          transaction_id,
+          zip_code,
+          prefecture,
+          city,
+          street
+        ) VALUES (
+          ?,
+          ?,
+          ?,
+          ?,
+          ?
+        );
+        """;
     try (PreparedStatement statement = connection.prepareStatement(sql)) {
       statement.setString(1, purchase.purchaseIdentifier().value());
       statement.setString(2, purchase.address().zipCode());
@@ -101,16 +101,16 @@ public class PurchaseDataSource implements PurchaseRepository {
   void insertIdentity(Connection connection, Purchase purchase) {
     String sql =
         """
-                        INSERT INTO purchase.identity(
-                          transaction_id,
-                          first_name,
-                          last_name
-                        ) VALUES (
-                          ?,
-                          ?,
-                          ?
-                        );
-                        """;
+        INSERT INTO purchase.identity(
+          transaction_id,
+          first_name,
+          last_name
+        ) VALUES (
+          ?,
+          ?,
+          ?
+        );
+        """;
     try (PreparedStatement statement = connection.prepareStatement(sql)) {
       statement.setString(1, purchase.purchaseIdentifier().value());
       statement.setString(2, purchase.fullName().firstName().value());
@@ -124,30 +124,29 @@ public class PurchaseDataSource implements PurchaseRepository {
   List<Purchase> selectBy(UserIdentifier userIdentifier) {
     String sql =
         """
-          SELECT
-            transaction.id,
-            user_id,
-            item_id,
-            item.name AS item_name,
-            item.price AS item_price,
-            address.zip_code,
-            address.prefecture,
-            address.city,
-            address.street,
-            identity.first_name,
-            identity.last_name,
-            price
-          FROM purchase.transaction
-          JOIN purchase.item
-            ON transaction.item_id = item.id
-          JOIN purchase.address
-           ON transaction.id = address.transaction_id
-          JOIN purchase.identity
-            ON transaction.id = identity.transaction_id
-          WHERE
-            transaction.user_id = ?
-          ORDER BY transaction.created_at
-          """;
+        SELECT
+          transaction.id,
+          user_id,
+          item_id,
+          item.name AS item_name,
+          item.price AS item_price,
+          address.zip_code,
+          address.prefecture,
+          address.city,
+          address.street,
+          identity.first_name,
+          identity.last_name
+        FROM purchase.transaction
+        JOIN purchase.item
+          ON transaction.item_id = item.id
+        JOIN purchase.address
+         ON transaction.id = address.transaction_id
+        JOIN purchase.identity
+          ON transaction.id = identity.transaction_id
+        WHERE
+          transaction.user_id = ?
+        ORDER BY transaction.created_at;
+        """;
     try (Connection connection = databaseAccessor.getConnection();
         PreparedStatement statement = connection.prepareStatement(sql)) {
       statement.setString(1, userIdentifier.value());

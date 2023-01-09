@@ -16,11 +16,15 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @WebServlet(name = "registrationServlet", value = "/registration")
 public class RegistrationServlet extends HttpServlet implements ViewForwardable, ViewRedirectable {
 
   UserRegistrationService userRegistrationService;
+
+  Logger log = LoggerFactory.getLogger(RegistrationServlet.class);
 
   @Override
   public void init(ServletConfig config) {
@@ -46,7 +50,7 @@ public class RegistrationServlet extends HttpServlet implements ViewForwardable,
       redirect("login", request, response);
     } catch (UserAlreadyExistsException e) {
       request.setAttribute("errorMessage", "新規登録に失敗しました");
-      doGet(request, response);
+      forward("registration", request, response);
     }
   }
 }

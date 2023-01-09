@@ -86,8 +86,8 @@ public class PurchaseServlet extends HttpServlet implements ViewForwardable, Vie
       }
       redirect("item", request, response);
     } catch (UserNotFoundException | PasswordUnMatchException e) {
-      request.setAttribute("errorMessage", "ログインに失敗しました");
-      doGet(request, response);
+      request.setAttribute("errorMessage", "購入に失敗しました");
+      forward("purchase", request, response);
     }
   }
 }

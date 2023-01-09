@@ -25,4 +25,12 @@ public class ItemCriteria {
   public int page() {
     return pagination.page();
   }
+
+  int getPerPage() {
+    return perPage();
+  }
+
+  int getOffset() {
+    return offset();
+  }
 }

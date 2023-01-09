@@ -60,7 +60,7 @@ taglib prefix="c" uri="jakarta.tags.core" %>
               placeholder="Password"
               name="password"
               required
-              pattern="^[a-zA-Z\d]{8,100}$"
+              pattern="^[a-zA-Z\d]{8,60}$"
             />
             <label for="password" class="form-label" style="color: lightgray"
               >パスワード</label

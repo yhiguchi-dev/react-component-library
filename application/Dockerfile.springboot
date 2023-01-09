@@ -7,14 +7,14 @@ COPY *.gradle gradlew ./
 COPY springboot/build.gradle springboot/build.gradle
 COPY api/build.gradle api/build.gradle
 
-RUN ./gradlew dependencies
+RUN ./gradlew springboot:dependencies
 
 FROM setup-builder as builder
 
 COPY springboot/src/ springboot/src/
 COPY api/src/ api/src/
 
-RUN ./gradlew clean springboot:build -x springboot:check
+RUN ./gradlew clean --build-cache springboot:build -x springboot:check
 
 FROM amazoncorretto:17 as runtime
 

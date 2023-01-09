@@ -12,7 +12,7 @@
     />
   </head>
   <body>
-    <nav class="navbar navbar-light bg-light">
+    <header class="navbar navbar-light bg-light">
       <div class="container">
         <div class="d-flex align-items-center">
           <a class="navbar-brand" href="https://www.solxyz.co.jp/">
@@ -22,19 +22,20 @@
               class="h3"
             />
           </a>
-          <h1 class="h3">購買管理</h1>
+          <h1 class="h3" style="width: 8rem">購買管理</h1>
         </div>
       </div>
-    </nav>
+    </header>
     <div class="container py-3 px-0">
       <div class="w-25 mx-auto">
+        <h1 class="h3">ログイン</h1>
         <form
-          th:action="@{/home}"
+          id="login_form"
+          th:action="@{/login}"
           th:object="${loginRequest}"
           method="post"
           novalidate
         >
-          <h1 class="h3">ログイン</h1>
           <div class="form-floating">
             <input
               type="email"
@@ -44,11 +45,10 @@
               th:field="*{email}"
               required
             />
-            <div class="invalid-feedback">Valid first name is required.</div>
             <label for="email" class="form-label" style="color: lightgray"
               >メールアドレス</label
             >
-            <div id="emailErrorMessage" class="form-text" style="color: red" />
+            <div class="invalid-feedback">入力内容に誤りがあります</div>
           </div>
           <div class="form-floating">
             <input
@@ -62,11 +62,7 @@
             <label for="password" class="form-label" style="color: lightgray"
               >パスワード</label
             >
-            <div
-              id="passwordErrorMessage"
-              class="form-text"
-              style="color: red"
-            />
+            <div class="invalid-feedback">入力内容に誤りがあります</div>
           </div>
           <div>
             <a th:href="@{/registration}" class="link-primary"
@@ -89,7 +85,7 @@
               class="btn-close btn-close-white"
               data-bs-dismiss="toast"
             ></button>
-            <div id="submitErrorMessage" class="toast-body" />
+            <div id="errorMessage" class="toast-body" />
           </div>
         </div>
       </div>
@@ -100,47 +96,62 @@
       crossorigin="anonymous"
     ></script>
     <script th:inline="javascript">
+      const isValidEmail = () => {
+        const email = document.getElementById("email");
+        if (email.validity.valid) {
+          email.className = "form-control";
+          return true;
+        }
+        email.className = "form-control is-invalid";
+        return false;
+      };
+
+      const isValidPassword = () => {
+        const password = document.getElementById("password");
+        if (password.validity.valid) {
+          password.className = "form-control";
+          return true;
+        }
+        password.className = "form-control is-invalid";
+        return false;
+      };
+
+      const validateOnLoad = (callback) => {
+        const errorMessage = /*[[${errorMessage}]]*/ "errorMessage";
+        const errorMessageEl = document.getElementById("errorMessage");
+        window.addEventListener("load", () => {
+          if (errorMessage && errorMessage !== "null") {
+            errorMessageEl.innerHTML = errorMessage;
+            callback();
+          }
+        });
+      };
+
       const validateEmail = () => {
         const email = document.getElementById("email");
-        const emailErrorMessage = document.getElementById("emailErrorMessage");
         email.addEventListener("input", () => {
-          if (email.validity.valid) {
-            email.className = "form-control";
-            emailErrorMessage.value = "";
-          } else {
-            email.className = "form-control is-invalid";
-            emailErrorMessage.value = "入力内容に誤りがあります";
-          }
+          isValidEmail();
         });
       };
+
       const validatePassword = () => {
         const password = document.getElementById("password");
-        const passwordErrorMessage = document.getElementById(
-          "passwordErrorMessage"
-        );
         password.addEventListener("input", () => {
-          if (password.validity.valid) {
-            passwordErrorMessage.value = "";
-          } else {
-            passwordErrorMessage.value = "入力内容に誤りがあります";
-          }
+          isValidPassword();
         });
       };
-      const validateOnSubmit = (callback) => {
-        const email = document.getElementById("email");
-        const password = document.getElementById("password");
-        const submitErrorMessage =
-          document.getElementById("submitErrorMessage");
-        const form = document.querySelector("form");
+
+      const validateOnSubmit = () => {
+        const form = document.getElementById("login_form");
         form.addEventListener("submit", (event) => {
-          if (email.validity.valid && password.validity.valid) {
+          const array = [isValidEmail(), isValidPassword()];
+          if (array.every((isValid) => isValid === true)) {
             return;
           }
-          submitErrorMessage.value = "入力内容に誤りがあります";
-          callback();
           event.preventDefault();
         });
       };
+
       (() => {
         const toastElList = [].slice.call(document.querySelectorAll(".toast"));
         const toastList = toastElList.map((toastEl) => {
@@ -152,9 +163,10 @@
         const callback = () => {
           toastList[0].show();
         };
+        validateOnLoad(callback);
         validateEmail();
         validatePassword();
-        validateOnSubmit(callback);
+        validateOnSubmit();
       })();
     </script>
   </body>

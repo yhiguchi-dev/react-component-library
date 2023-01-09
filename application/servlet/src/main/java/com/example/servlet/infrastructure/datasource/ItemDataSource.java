@@ -30,7 +30,7 @@ public class ItemDataSource implements ItemRepository {
         """
               SELECT
                 id,
-                "name",
+                name,
                 price
               FROM purchase.item
               WHERE
@@ -56,14 +56,14 @@ public class ItemDataSource implements ItemRepository {
   Item selectBy(ItemName itemName) {
     String sql =
         """
-              SELECT
-                id,
-                "name",
-                price
-              FROM purchase.item
-              WHERE
-                "name" = ?;
-              """;
+        SELECT
+          id,
+          name,
+          price
+        FROM purchase.item
+        WHERE
+          name = ?;
+        """;
     try (Connection connection = databaseAccessor.getConnection();
         PreparedStatement statement = connection.prepareStatement(sql)) {
       statement.setString(1, itemName.value());

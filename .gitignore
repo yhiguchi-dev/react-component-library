@@ -80,3 +80,7 @@ gradle-app.setting
 .classpath
 .idea/
 *.iml
+gradle-user-home/
+.envrc
+.npmrc
+.sdkmanrc

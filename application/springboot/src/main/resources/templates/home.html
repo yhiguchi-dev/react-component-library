@@ -16,74 +16,62 @@
     />
   </head>
   <body>
-    <header class="navbar navbar-light bg-light">
-      <a class="navbar-brand" href="https://www.solxyz.co.jp/">
-        <img src="http://localhost:8080/logo.svg" alt="solxyz-logo" />
-      </a>
-      <form
-        th:action="@{/home}"
-        th:object="${registrationRequest}"
-        method="post"
-        novalidate
-      >
-        <button type="submit" class="btn btn-primary">ログアウト</button>
-      </form>
+    <header class="navbar navbar-expand navbar-light bg-light">
+      <div class="d-flex align-items-center">
+        <a class="navbar-brand" href="https://www.solxyz.co.jp/">
+          <img
+            src="http://localhost:8080/logo.svg"
+            alt="solxyz-logo"
+            class="h3"
+          />
+        </a>
+        <h1 class="h3" style="width: 8rem">購買管理</h1>
+      </div>
+      <div class="container px-2 d-flex">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{/home}">
+              <i class="bi bi-house"></i> HOME</a
+            >
+          </li>
+        </ul>
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <form th:action="@{/logout}" method="post" novalidate>
+              <button type="submit" class="btn btn-outline-secondary">
+                <i class="bi bi-door-closed"></i>
+                ログアウト
+              </button>
+            </form>
+          </li>
+        </ul>
+      </div>
     </header>
-
-    <div class="container">
+    <div class="container py-3 px-0">
+      <h1 class="h3">ホーム</h1>
       <div class="row">
-        <div class="col-md-6">
-          <div class="panel panel-primary">
-            <div class="panel-heading">
-              <h3 class="panel-title">
-                <span class="glyphicon glyphicon-bookmark"></span> Quick
-                Shortcuts
-              </h3>
-            </div>
-            <div class="panel-body">
-              <div class="row">
-                <div class="col-xs-6 col-md-6">
-                  <a href="#" class="btn btn-danger btn-lg" role="button"
-                    ><span class="glyphicon glyphicon-list-alt"></span>
-                    <br />Apps</a
-                  >
-                  <a href="#" class="btn btn-warning btn-lg" role="button"
-                    ><span class="glyphicon glyphicon-bookmark"></span>
-                    <br />Bookmarks</a
-                  >
-                  <a href="#" class="btn btn-primary btn-lg" role="button"
-                    ><span class="glyphicon glyphicon-signal"></span>
-                    <br />Reports</a
-                  >
-                  <a href="#" class="btn btn-primary btn-lg" role="button"
-                    ><span class="glyphicon glyphicon-comment"></span>
-                    <br />Comments</a
-                  >
-                </div>
-                <div class="col-xs-6 col-md-6">
-                  <a href="#" class="btn btn-success btn-lg" role="button"
-                    ><span class="glyphicon glyphicon-user"></span>
-                    <br />Users</a
-                  >
-                  <a href="#" class="btn btn-info btn-lg" role="button"
-                    ><span class="glyphicon glyphicon-file"></span>
-                    <br />Notes</a
-                  >
-                  <a href="#" class="btn btn-primary btn-lg" role="button"
-                    ><span class="glyphicon glyphicon-picture"></span>
-                    <br />Photos</a
-                  >
-                  <a href="#" class="btn btn-primary btn-lg" role="button"
-                    ><span class="glyphicon glyphicon-tag"></span> <br />Tags</a
-                  >
-                </div>
-              </div>
-            </div>
-          </div>
+        <div class="col-lg-12">
+          <p>
+            <a
+              href="/app/item"
+              th:href="@{/item}"
+              class="btn btn-sq-lg btn-primary"
+            >
+              <i class="bi bi-cart-check"></i><br />
+              商品購入
+            </a>
+            <a
+              href="/app/history"
+              th:href="@{/history}"
+              class="btn btn-sq-lg btn-success"
+            >
+              <i class="bi bi-box-seam"></i><br />
+              注文履歴
+            </a>
+          </p>
         </div>
       </div>
     </div>
-
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"

@@ -14,4 +14,5 @@
         configPath="${catalina.base}/conf/redisson.conf"
         readMode="MEMORY"
         updateMode="DEFAULT"/>
+    <Valve className="org.apache.catalina.valves.HealthCheckValve" />
 </Context>
