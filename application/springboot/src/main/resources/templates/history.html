@@ -96,9 +96,9 @@
       };
 
       const createTable = () => {
-        const resultJson = /*[[${resultJson}]]*/ "null";
+        const resultJson = /*[[${resultJson}]]*/ "";
         const historiesEl = document.getElementById("histories");
-        if (resultJson === "null") {
+        if (resultJson === null) {
           historiesEl.className = "d-none";
           return;
         }
