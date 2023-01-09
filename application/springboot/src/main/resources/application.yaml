@@ -16,5 +16,5 @@ spring:
     cache: false
 logging:
   level:
-    root: debug
+    root: info
     org.mybatis: debug

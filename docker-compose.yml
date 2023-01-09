@@ -4,11 +4,11 @@ services:
     container_name: load-balancer
     ports:
       - 8080:80
-#    depends_on:
-#      servlet-app:
-#        condition: service_healthy
-#      spring-boot-app:
-#        condition: service_healthy
+    depends_on:
+      servlet-app:
+        condition: service_healthy
+      spring-boot-app:
+        condition: service_healthy
   servlet-app:
     build:
       context: ./application
@@ -26,7 +26,7 @@ services:
       - REDIS_PORT=6379
       - REDIS_PASSWORD=purchase
     healthcheck:
-      test: [ "CMD", "curl", "-f", "http://servlet-app/app/health" ]
+      test: [ "CMD", "curl", "-f", "http://localhost:8080/app/health" ]
       interval: 10s
       timeout: 10s
       retries: 3
@@ -52,7 +52,7 @@ services:
       - REDIS_PORT=6379
       - REDIS_PASSWORD=purchase
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://spring-boot-app/actuator/health"]
+      test: ["CMD", "curl", "-f", "http://localhost:8080/actuator/health"]
       interval: 10s
       timeout: 10s
       retries: 3
