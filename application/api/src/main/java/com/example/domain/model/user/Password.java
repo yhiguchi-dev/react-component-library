@@ -8,6 +8,8 @@ public class Password {
     this.value = value;
   }
 
+  Password() {}
+
   public String value() {
     return value;
   }

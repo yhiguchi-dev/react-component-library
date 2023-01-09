@@ -8,6 +8,8 @@ public class EmailAddress {
     this.value = value;
   }
 
+  EmailAddress() {}
+
   public String value() {
     return value;
   }

@@ -7,6 +7,8 @@ public class FirstName {
     this.value = value;
   }
 
+  FirstName() {}
+
   public String value() {
     return value;
   }

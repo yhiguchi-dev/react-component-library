@@ -7,6 +7,8 @@ public class Price {
     this.value = value;
   }
 
+  Price() {}
+
   public int value() {
     return value;
   }

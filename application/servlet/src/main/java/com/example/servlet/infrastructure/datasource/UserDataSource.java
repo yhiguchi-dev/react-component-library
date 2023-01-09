@@ -24,16 +24,16 @@ public class UserDataSource implements UserRepository {
   void insert(User user) {
     String sql =
         """
-            INSERT INTO purchase."user"(
-              id,
-              email_address,
-              "password"
-            ) VALUES (
-              ?,
-              ?,
-              ?
-            );
-            """;
+        INSERT INTO purchase.user(
+          id,
+          email_address,
+          password
+        ) VALUES (
+          ?,
+          ?,
+          ?
+        );
+        """;
     try (Connection connection = databaseAccessor.getConnection()) {
       try (PreparedStatement statement = connection.prepareStatement(sql)) {
         statement.setString(1, user.userIdentifier().value());
@@ -53,14 +53,14 @@ public class UserDataSource implements UserRepository {
   User selectBy(EmailAddress emailAddress) {
     String sql =
         """
-            SELECT
-              id,
-              email_address,
-              "password"
-            FROM purchase."user"
-            WHERE
-              email_address = ?;
-            """;
+        SELECT
+          id,
+          email_address,
+          password
+        FROM purchase.user
+        WHERE
+          email_address = ?;
+        """;
     try (Connection connection = databaseAccessor.getConnection();
         PreparedStatement statement = connection.prepareStatement(sql)) {
       statement.setString(1, emailAddress.value());

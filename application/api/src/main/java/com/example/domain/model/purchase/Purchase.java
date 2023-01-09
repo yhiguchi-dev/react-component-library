@@ -24,6 +24,8 @@ public class Purchase {
     this.address = address;
   }
 
+  Purchase() {}
+
   public PurchaseIdentifier purchaseIdentifier() {
     return purchaseIdentifier;
   }

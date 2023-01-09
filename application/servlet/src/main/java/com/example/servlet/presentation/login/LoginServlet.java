@@ -1,10 +1,9 @@
 package com.example.servlet.presentation.login;
 
+import com.example.domain.model.authentication.UserAuthenticationException;
 import com.example.domain.model.user.PasswordEncodable;
 import com.example.domain.model.user.User;
 import com.example.domain.model.user.UserRepository;
-import com.example.domain.model.user.exception.PasswordUnMatchException;
-import com.example.domain.model.user.exception.UserNotFoundException;
 import com.example.servlet.application.service.PasswordAuthenticationService;
 import com.example.servlet.application.service.user.UserService;
 import com.example.servlet.infrastructure.datasource.DatabaseAccessor;
@@ -48,9 +47,9 @@ public class LoginServlet extends HttpServlet implements ViewForwardable, ViewRe
       HttpSession session = request.getSession(true);
       session.setAttribute("userIdentifier", authenticatedUser.userIdentifier().value());
       redirect("home", request, response);
-    } catch (UserNotFoundException | PasswordUnMatchException e) {
+    } catch (UserAuthenticationException e) {
       request.setAttribute("errorMessage", "ログインに失敗しました");
-      doGet(request, response);
+      forward("login", request, response);
     }
   }
 }

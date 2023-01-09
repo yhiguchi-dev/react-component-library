@@ -4,7 +4,7 @@ import java.util.List;
 
 public class ExcludedUrls {
 
-  static List<String> list = List.of("/login", "/registration");
+  static List<String> list = List.of("/login", "/registration", "/health");
 
   static boolean contains(String path) {
     return list.contains(path);

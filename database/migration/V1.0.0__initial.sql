@@ -1,10 +1,10 @@
 CREATE SCHEMA IF NOT EXISTS purchase;
 
-CREATE TABLE purchase."user"
+CREATE TABLE purchase.user
 (
     id            CHAR(36)                               NOT NULL,
     email_address VARCHAR(256)                           NOT NULL,
-    "password"    VARCHAR(256)                           NOT NULL,
+    password      VARCHAR(256)                           NOT NULL,
     created_at    TIMESTAMP WITH TIME ZONE DEFAULT now() NOT NULL,
     CONSTRAINT pk_user PRIMARY KEY (id),
     UNIQUE (email_address)
@@ -13,7 +13,7 @@ CREATE TABLE purchase."user"
 CREATE TABLE purchase.item
 (
     id         SERIAL                                 NOT NULL,
-    "name"     VARCHAR(256)                           NOT NULL,
+    name       VARCHAR(256)                           NOT NULL,
     price      INTEGER                                NOT NULL,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT now() NOT NULL,
     CONSTRAINT pk_item PRIMARY KEY (id),

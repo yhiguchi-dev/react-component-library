@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.springboot.infrastructure.datasource.purchase.PurchaseMapper">
+
+    <insert id="insertTransaction">
+        INSERT INTO purchase.transaction(
+          id,
+          user_id,
+          item_id
+        ) VALUES (
+          #{purchase.purchaseIdentifier.value},
+          #{purchase.userIdentifier.value},
+          #{purchase.item.itemIdentifier.value}
+        )
+    </insert>
+
+    <insert id="insertAddress">
+        INSERT INTO purchase.address(
+        transaction_id,
+        zip_code,
+        prefecture,
+        city,
+        street
+        ) VALUES (
+        #{purchase.purchaseIdentifier.value},
+        #{purchase.address.zipCode},
+        #{purchase.address.prefecture},
+        #{purchase.address.city},
+        #{purchase.address.street}
+        )
+    </insert>
+
+    <insert id="insertIdentity">
+        INSERT INTO purchase.identity(
+        transaction_id,
+        first_name,
+        last_name
+        ) VALUES (
+        #{purchase.purchaseIdentifier.value},
+        #{purchase.fullName.firstName.value},
+        #{purchase.fullName.lastName.value}
+        )
+    </insert>
+
+    <resultMap id="Purchase" type="com.example.domain.model.purchase.Purchase">
+        <id property="purchaseIdentifier.value" column="id" />
+        <id property="userIdentifier.value" column="user_id"/>
+        <id property="item.itemIdentifier.value" column="item_id"/>
+        <result property="item.itemName.value" column="item_name"/>
+        <result property="item.price.value" column="item_price"/>
+        <result property="address.zipCode" column="zip_code"/>
+        <result property="address.prefecture" column="prefecture"/>
+        <result property="address.city" column="city"/>
+        <result property="address.street" column="street"/>
+        <result property="fullName.firstName.value" column="first_name"/>
+        <result property="fullName.lastName.value" column="last_name"/>
+    </resultMap>
+
+    <select id="selectBy" resultMap="Purchase">
+        SELECT
+          transaction.id,
+          user_id,
+          item_id,
+          item.name AS item_name,
+          item.price AS item_price,
+          address.zip_code,
+          address.prefecture,
+          address.city,
+          address.street,
+          identity.first_name,
+          identity.last_name
+        FROM purchase.transaction
+        JOIN purchase.item
+          ON transaction.item_id = item.id
+        JOIN purchase.address
+          ON transaction.id = address.transaction_id
+        JOIN purchase.identity
+          ON transaction.id = identity.transaction_id
+        WHERE
+          transaction.user_id = #{userIdentifier.value}
+        ORDER BY transaction.created_at
+    </select>
+</mapper>

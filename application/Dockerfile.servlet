@@ -18,6 +18,7 @@ FROM tomcat:10.1.4-jre17-temurin-jammy as runtime
 
 COPY ./servlet/setenv.sh $CATALINA_HOME/bin/
 COPY ./servlet/redisson.conf $CATALINA_HOME/conf
+COPY ./servlet/logback.xml $CATALINA_HOME/conf
 COPY --from=setup-builder /build/*.jar $CATALINA_HOME/lib
 
 FROM setup-builder as builder
@@ -25,7 +26,7 @@ FROM setup-builder as builder
 COPY servlet/src/ servlet/src/
 COPY api/src/ api/src/
 
-RUN ./gradlew clean servlet:build -x servlet:check
+RUN ./gradlew clean --build-cache servlet:build -x servlet:check
 
 FROM runtime
 

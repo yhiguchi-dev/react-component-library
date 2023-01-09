@@ -32,20 +32,20 @@ public class ItemSummaryDataSource implements ItemSummaryRepository {
   List<Item> selectBy(ItemCriteria itemCriteria) {
     String sql =
         """
-      SELECT
-        id,
-        name,
-        price
-      FROM purchase.item
-      WHERE
-        name LIKE ?
-      ORDER BY id
-      LIMIT ?
-      OFFSET ?;
-      """;
+        SELECT
+          id,
+          name,
+          price
+        FROM purchase.item
+        WHERE
+          name LIKE CONCAT(?, '%')
+        ORDER BY id
+        LIMIT ?
+        OFFSET ?;
+        """;
     try (Connection connection = databaseAccessor.getConnection();
         PreparedStatement statement = connection.prepareStatement(sql)) {
-      statement.setString(1, itemCriteria.itemName() + "%");
+      statement.setString(1, itemCriteria.itemName());
       statement.setInt(2, itemCriteria.perPage());
       statement.setInt(3, itemCriteria.offset());
       try (ResultSet resultSet = statement.executeQuery()) {
@@ -68,15 +68,15 @@ public class ItemSummaryDataSource implements ItemSummaryRepository {
   int selectCount(ItemCriteria itemCriteria) {
     String sql =
         """
-      SELECT
-        COUNT(*)
-      FROM purchase.item
-      WHERE
-        name LIKE ?;
-      """;
+        SELECT
+          COUNT(*)
+        FROM purchase.item
+        WHERE
+          name LIKE CONCAT(?, '%');
+        """;
     try (Connection connection = databaseAccessor.getConnection();
         PreparedStatement statement = connection.prepareStatement(sql)) {
-      statement.setString(1, itemCriteria.itemName() + "%");
+      statement.setString(1, itemCriteria.itemName());
       try (ResultSet resultSet = statement.executeQuery()) {
         while (resultSet.next()) {
           return resultSet.getInt(1);

@@ -9,7 +9,7 @@
 	},
 	"scripts": {
 		"format": "script/format.sh",
-		"testData": "node script/testData.js",
+		"testData": "node script/test-data.js",
 		"lint": "prettier --check --ignore-path .gitignore '{**/*,*}.{html,js}'",
 		"fix": "prettier --write --ignore-path .gitignore '{**/*,*}.{html,js}'"
 	}

@@ -7,6 +7,8 @@ public class LastName {
     this.value = value;
   }
 
+  LastName() {}
+
   public String value() {
     return value;
   }

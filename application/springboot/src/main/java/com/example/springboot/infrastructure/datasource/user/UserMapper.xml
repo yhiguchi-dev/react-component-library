@@ -19,12 +19,14 @@
         <result property="emailAddress.value" column="email_address"/>
         <result property="password.value" column="password"/>
     </resultMap>
+
     <select id="selectBy" resultMap="User">
         SELECT
           id,
           email_address,
           password
         FROM purchase.user
-        WHERE email_address = #{emailAddress.value}
+        WHERE
+          email_address = #{emailAddress.value}
     </select>
 </mapper>

@@ -11,6 +11,8 @@ public class Item {
     this.price = price;
   }
 
+  Item() {}
+
   public ItemIdentifier itemIdentifier() {
     return itemIdentifier;
   }

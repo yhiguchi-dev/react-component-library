@@ -86,10 +86,10 @@ taglib prefix="c" uri="jakarta.tags.core" %>
               <th scope="col"></th>
             </tr>
           </thead>
-          <tbody id="item-table-body" />
+          <tbody id="item-table-body"></tbody>
         </table>
         <nav aria-label="Page navigation">
-          <ul class="pagination" id="pagination" />
+          <ul class="pagination" id="pagination"></ul>
         </nav>
       </div>
       <div class="toast-container position-fixed p-3 bottom-0 end-0">
@@ -105,7 +105,7 @@ taglib prefix="c" uri="jakarta.tags.core" %>
               class="btn-close btn-close-white"
               data-bs-dismiss="toast"
             ></button>
-            <div id="errorMessage" class="toast-body" />
+            <div id="errorMessage" class="toast-body"></div>
           </div>
         </div>
       </div>

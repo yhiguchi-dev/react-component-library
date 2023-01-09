@@ -4,4 +4,4 @@ dbHost=${DB_HOST:=localhost}
 dbPort=${DB_PORT:=5432}
 dbName=${DB_NAME:=purchase}
 
-export JAVA_OPTS="-DdbUrl=${dbUrl} -DdbUser=${dbUser} -DdbPassword=${dbPassword} -DdbHost=${dbHost} -DdbPort=${dbPort} -DdbName=${dbName}"
+JAVA_OPTS="-DdbUser=${dbUser} -DdbPassword=${dbPassword} -DdbHost=${dbHost} -DdbPort=${dbPort} -DdbName=${dbName}"

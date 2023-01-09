@@ -25,6 +25,21 @@
 
 IDEは好きなものを利用してください
 
+## プロジェクト構造
+
+```text
+.
+├── application     -- アプリケーション
+│   ├── api         -- 
+│   ├── servlet     -- サーブレット用モジュール
+│   └── springboot  -- SpringBoot用モジュール
+├── database        -- データベース
+│   └── migration
+├── loadbalancer    -- ロードバランサー
+│   └── images
+└── script -- 
+```
+
 ## 利用方法
 
 `docker compose`コマンドでビルド/起動を行います

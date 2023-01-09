@@ -201,7 +201,7 @@ taglib prefix="c" uri="jakarta.tags.core" %>
       integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
       crossorigin="anonymous"
     ></script>
-    <script async="true">
+    <script>
       const isValidLastName = () => {
         const lastName = document.getElementById("last_name");
         if (lastName.validity.valid) {

@@ -7,6 +7,8 @@ public class ItemName {
     this.value = value;
   }
 
+  ItemName() {}
+
   public String value() {
     return value;
   }

@@ -9,6 +9,8 @@ public class FullName {
     this.lastName = lastName;
   }
 
+  FullName() {}
+
   public FirstName firstName() {
     return firstName;
   }
