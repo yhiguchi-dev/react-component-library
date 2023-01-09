@@ -28,7 +28,6 @@ public class RegistrationServlet extends HttpServlet implements ViewForwardable,
 
   @Override
   public void init(ServletConfig config) {
-    log.info("hogehoge");
     UserRepository userRepository = new UserDataSource(new DatabaseAccessor());
     PasswordEncodable passwordEncodable = new MyPasswordEncoder();
     UserService userService = new UserService(userRepository, passwordEncodable);

@@ -14,6 +14,17 @@ spring:
       namespace: session:purchase
   thymeleaf:
     cache: false
+server:
+  port: 8080
+  shutdown: graceful
+management:
+  endpoints:
+    web:
+      base-path: "/"
+      path-mapping:
+        health: "health"
+      exposure:
+        include: health
 logging:
   level:
     root: info
