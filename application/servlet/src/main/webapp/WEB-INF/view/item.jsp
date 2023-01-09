@@ -49,7 +49,7 @@ taglib prefix="c" uri="jakarta.tags.core" %>
         </ul>
       </div>
     </header>
-    <div class="container py-3 px-0">
+    <div class="container-fluid py-3 px-3">
       <form
         id="item_form"
         action="/app/item"
@@ -57,8 +57,8 @@ taglib prefix="c" uri="jakarta.tags.core" %>
         class="form-inline align-items-start"
         novalidate
       >
-        <div class="row row-eq-height">
-          <div class="col-sm-3">
+        <div class="d-flex flex-row gap-3">
+          <div>
             <input
               type="search"
               id="item_name"
@@ -69,7 +69,7 @@ taglib prefix="c" uri="jakarta.tags.core" %>
             />
             <div class="invalid-feedback">入力内容に誤りがあります</div>
           </div>
-          <div class="col-sm-3">
+          <div>
             <button type="submit" class="btn btn-primary">
               <i class="bi bi-search"></i>
             </button>
@@ -119,7 +119,7 @@ taglib prefix="c" uri="jakarta.tags.core" %>
       const isValidItemName = () => {
         const itemName = document.getElementById("item_name");
         if (itemName.validity.valid) {
-          itemName.className = "form-control is-valid";
+          itemName.className = "form-control";
           return true;
         }
         itemName.className = "form-control is-invalid";
@@ -188,6 +188,10 @@ taglib prefix="c" uri="jakarta.tags.core" %>
           parsed;
         const itemNameEl = document.getElementById("item_name");
         itemNameEl.value = item_name;
+        if (total_count === 0) {
+          itemsEl.className = "d-none";
+          return;
+        }
         const itemTableBodyEl = document.getElementById("item-table-body");
         Array.from(items).forEach((item, index) => {
           const { item_name, price } = item;
