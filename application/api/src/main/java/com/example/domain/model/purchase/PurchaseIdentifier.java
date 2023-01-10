@@ -2,7 +2,6 @@ package com.example.domain.model.purchase;
 
 import java.util.Objects;
 
-/** 購入識別子 */
 public class PurchaseIdentifier {
   String value;
 

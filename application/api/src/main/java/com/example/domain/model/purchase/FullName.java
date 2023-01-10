@@ -1,6 +1,5 @@
 package com.example.domain.model.purchase;
 
-/** 氏名 */
 public class FullName {
   FirstName firstName;
   LastName lastName;

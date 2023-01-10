@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-/** 商品一覧 */
 public class Items implements Iterable<Item> {
 
   List<Item> values;

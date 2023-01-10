@@ -1,6 +1,5 @@
 package com.example.domain.model.purchase;
 
-/** 姓 */
 public class LastName {
   String value;
 

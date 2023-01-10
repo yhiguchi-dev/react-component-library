@@ -1,6 +1,5 @@
 package com.example.query;
 
-/** ページ */
 public class Page {
   int value;
 

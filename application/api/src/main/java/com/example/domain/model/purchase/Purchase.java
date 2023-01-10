@@ -3,7 +3,6 @@ package com.example.domain.model.purchase;
 import com.example.domain.model.item.Item;
 import com.example.domain.model.user.UserIdentifier;
 
-/** 購入の作成者 */
 public class Purchase {
   PurchaseIdentifier purchaseIdentifier;
 

@@ -59,7 +59,7 @@ taglib prefix="c" uri="jakarta.tags.core" %>
               <th scope="col"></th>
             </tr>
           </thead>
-          <tbody id="history-table-body"></tbody>
+          <tbody id="history-table-body" />
         </table>
       </div>
       <div class="toast-container position-fixed p-3 bottom-0 end-0">
@@ -75,7 +75,7 @@ taglib prefix="c" uri="jakarta.tags.core" %>
               class="btn-close btn-close-white"
               data-bs-dismiss="toast"
             ></button>
-            <div id="errorMessage" class="toast-body"></div>
+            <div id="errorMessage" class="toast-body" />
           </div>
         </div>
       </div>
@@ -86,10 +86,6 @@ taglib prefix="c" uri="jakarta.tags.core" %>
       crossorigin="anonymous"
     ></script>
     <script>
-      /**
-       * オンロード時検証
-       * @param callback
-       */
       const validateOnLoad = (callback) => {
         const errorMessage = '<%=request.getAttribute("errorMessage") %>';
         const errorMessageEl = document.getElementById("errorMessage");
@@ -101,10 +97,7 @@ taglib prefix="c" uri="jakarta.tags.core" %>
         });
       };
 
-      /**
-       * 履歴テーブル作成
-       */
-      const createHistoryTable = () => {
+      const createTable = () => {
         const resultJson = '<%=request.getAttribute("resultJson") %>';
         const historiesEl = document.getElementById("histories");
         if (resultJson === "null") {
@@ -158,29 +151,19 @@ taglib prefix="c" uri="jakarta.tags.core" %>
         });
       };
 
-      /**
-       * トースト表示
-       * @returns {callback}
-       */
-      const showToast = () => {
+      (() => {
+        const toastElList = [].slice.call(document.querySelectorAll(".toast"));
         const toastList = toastElList.map((toastEl) => {
           return new bootstrap.Toast(toastEl, {
             delay: 5000,
             autohide: true,
           });
         });
-        return () => {
+        const callback = () => {
           toastList[0].show();
         };
-      }
-
-      /**
-       * ページ読み込みスクリプト
-       */
-      (() => {
-        const callback = showToast();
         validateOnLoad(callback);
-        createHistoryTable();
+        createTable();
       })();
     </script>
   </body>
