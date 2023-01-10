@@ -1,5 +1,6 @@
 package com.example.query;
 
+/** ページネーション */
 public class Pagination {
   Page page;
   PerPage perPage;

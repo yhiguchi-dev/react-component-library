@@ -2,6 +2,7 @@ package com.example.query;
 
 import com.example.domain.model.item.Items;
 
+/** 商品サマリ */
 public class ItemSummary {
   Items items;
   int totalCount;

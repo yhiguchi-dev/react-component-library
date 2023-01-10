@@ -202,6 +202,10 @@ taglib prefix="c" uri="jakarta.tags.core" %>
       crossorigin="anonymous"
     ></script>
     <script>
+      /**
+       * 姓 妥当性チェック
+       * @returns {boolean}
+       */
       const isValidLastName = () => {
         const lastName = document.getElementById("last_name");
         if (lastName.validity.valid) {
@@ -211,6 +215,11 @@ taglib prefix="c" uri="jakarta.tags.core" %>
         lastName.className = "form-control is-invalid";
         return false;
       };
+
+      /**
+       * 名 妥当性チェック
+       * @returns {boolean}
+       */
       const isValidFirstName = () => {
         const firstName = document.getElementById("first_name");
         if (firstName.validity.valid) {
@@ -220,6 +229,11 @@ taglib prefix="c" uri="jakarta.tags.core" %>
         firstName.className = "form-control is-invalid";
         return false;
       };
+
+      /**
+       * 郵便番号妥当性チェック
+       * @returns {boolean}
+       */
       const isValidZipCode = () => {
         const zipCode = document.getElementById("zip_code");
         if (zipCode.validity.valid) {
@@ -230,6 +244,10 @@ taglib prefix="c" uri="jakarta.tags.core" %>
         return false;
       };
 
+      /**
+       * 住所妥当性チェック
+       * @returns {boolean}
+       */
       const isValidAddress = () => {
         const address = document.getElementById("address");
         if (address.validity.valid) {
@@ -239,6 +257,11 @@ taglib prefix="c" uri="jakarta.tags.core" %>
         address.className = "form-control is-invalid";
         return false;
       };
+
+      /**
+       * 住所2妥当性チェック
+       * @returns {boolean}
+       */
       const isValidAddress2 = () => {
         const address = document.getElementById("address2");
         if (address.validity.valid) {
@@ -248,6 +271,11 @@ taglib prefix="c" uri="jakarta.tags.core" %>
         address.className = "form-control is-invalid";
         return false;
       };
+
+      /**
+       * 住所3妥当性チェック
+       * @returns {boolean}
+       */
       const isValidAddress3 = () => {
         const address = document.getElementById("address3");
         if (address.validity.valid) {
@@ -258,6 +286,10 @@ taglib prefix="c" uri="jakarta.tags.core" %>
         return false;
       };
 
+      /**
+       * オンロード時検証
+       * @param callback
+       */
       const validateOnLoad = (callback) => {
         const errorMessage = '<%=request.getAttribute("errorMessage") %>';
         const errorMessageEl = document.getElementById("errorMessage");
@@ -269,6 +301,9 @@ taglib prefix="c" uri="jakarta.tags.core" %>
         });
       };
 
+      /**
+       * 姓 検証
+       */
       const validateLastName = () => {
         const lastName = document.getElementById("last_name");
         lastName.addEventListener("input", () => {
@@ -276,6 +311,9 @@ taglib prefix="c" uri="jakarta.tags.core" %>
         });
       };
 
+      /**
+       * 名 検証
+       */
       const validateFirstName = () => {
         const firstName = document.getElementById("first_name");
         firstName.addEventListener("input", () => {
@@ -283,6 +321,9 @@ taglib prefix="c" uri="jakarta.tags.core" %>
         });
       };
 
+      /**
+       * 郵便番号検証
+       */
       const validateZipCode = () => {
         const zipCode = document.getElementById("zip_code");
         zipCode.addEventListener("input", () => {
@@ -290,6 +331,9 @@ taglib prefix="c" uri="jakarta.tags.core" %>
         });
       };
 
+      /**
+       * 住所検証
+       */
       const validateAddress = () => {
         const address = document.getElementById("address");
         address.addEventListener("input", () => {
@@ -297,6 +341,9 @@ taglib prefix="c" uri="jakarta.tags.core" %>
         });
       };
 
+      /**
+       * 住所2検証
+       */
       const validateAddress2 = () => {
         const address2 = document.getElementById("address2");
         address2.addEventListener("input", () => {
@@ -304,6 +351,9 @@ taglib prefix="c" uri="jakarta.tags.core" %>
         });
       };
 
+      /**
+       * 住所3検証
+       */
       const validateAddress3 = () => {
         const address3 = document.getElementById("address3");
         address3.addEventListener("input", () => {
@@ -311,6 +361,9 @@ taglib prefix="c" uri="jakarta.tags.core" %>
         });
       };
 
+      /**
+       * サブミット時検証
+       */
       const validateOnSubmit = () => {
         const form = document.getElementById("purchase_form");
         form.addEventListener("submit", (event) => {
@@ -329,6 +382,9 @@ taglib prefix="c" uri="jakarta.tags.core" %>
         });
       };
 
+      /**
+       * 商品埋め
+       */
       const fillItem = () => {
         const itemName = '<%=request.getAttribute("item_name") %>';
         const price = '<%=request.getAttribute("price") %>';
@@ -339,6 +395,11 @@ taglib prefix="c" uri="jakarta.tags.core" %>
         priceEl.innerHTML = "￥" + price;
       };
 
+      /**
+       * 住所取得
+       * @param zipCode
+       * @returns {Promise<any>}
+       */
       const getAddress = async (zipCode) => {
         const data = {
           zipcode: zipCode,
@@ -353,6 +414,10 @@ taglib prefix="c" uri="jakarta.tags.core" %>
         return await response.json();
       };
 
+      /**
+       * 住所埋め
+       * @returns {Promise<void>}
+       */
       const fillAddress = async () => {
         if (!isValidZipCode()) {
           return;
@@ -379,17 +444,27 @@ taglib prefix="c" uri="jakarta.tags.core" %>
         console.log(JSON.stringify(results));
       };
 
-      (() => {
-        const toastElList = [].slice.call(document.querySelectorAll(".toast"));
+      /**
+       * トースト表示
+       * @returns {callback}
+       */
+      const showToast = () => {
         const toastList = toastElList.map((toastEl) => {
           return new bootstrap.Toast(toastEl, {
             delay: 5000,
             autohide: true,
           });
         });
-        const callback = () => {
+        return () => {
           toastList[0].show();
         };
+      }
+
+      /**
+       * ページ読み込みスクリプト
+       */
+      (() => {
+        const callback = showToast();
         validateOnLoad(callback);
         validateLastName();
         validateFirstName();

@@ -4,6 +4,7 @@ import com.example.domain.model.item.Item;
 import com.example.domain.model.user.UserIdentifier;
 import java.util.UUID;
 
+/** 購入 */
 public class PurchaseCreator {
 
   public static Purchase create(

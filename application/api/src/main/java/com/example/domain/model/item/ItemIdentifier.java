@@ -2,6 +2,7 @@ package com.example.domain.model.item;
 
 import java.util.Objects;
 
+/** 商品識別子 */
 public class ItemIdentifier {
   int value;
 

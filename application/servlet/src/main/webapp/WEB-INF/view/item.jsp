@@ -116,6 +116,10 @@ taglib prefix="c" uri="jakarta.tags.core" %>
       crossorigin="anonymous"
     ></script>
     <script>
+      /**
+       * 商品名妥当性チェック
+       * @returns {boolean}
+       */
       const isValidItemName = () => {
         const itemName = document.getElementById("item_name");
         if (itemName.validity.valid) {
@@ -126,6 +130,10 @@ taglib prefix="c" uri="jakarta.tags.core" %>
         return false;
       };
 
+      /**
+       * オンロード時検証
+       * @param callback
+       */
       const validateOnLoad = (callback) => {
         const errorMessage = '<%=request.getAttribute("errorMessage") %>';
         const errorMessageEl = document.getElementById("errorMessage");
@@ -137,6 +145,9 @@ taglib prefix="c" uri="jakarta.tags.core" %>
         });
       };
 
+      /**
+       * サブミット時検証
+       */
       const validateOnSubmit = () => {
         const form = document.getElementById("item_form");
         form.addEventListener("submit", (event) => {
@@ -148,6 +159,13 @@ taglib prefix="c" uri="jakarta.tags.core" %>
         });
       };
 
+      /**
+       * ページ付け
+       * @param current
+       * @param perPage
+       * @param totalCount
+       * @returns {{current, items: string[]}}
+       */
       const paginate = ({ current, perPage, totalCount }) => {
         const division = Math.floor(totalCount / perPage);
         const max = totalCount % perPage > 0 ? division + 1 : division;
@@ -176,7 +194,10 @@ taglib prefix="c" uri="jakarta.tags.core" %>
         return { current, items };
       };
 
-      const createTable = () => {
+      /**
+       * 商品テーブル作成
+       */
+      const createItemTable = () => {
         const resultJson = '<%=request.getAttribute("resultJson") %>';
         const itemsEl = document.getElementById("items");
         if (resultJson === "null") {
@@ -254,20 +275,30 @@ taglib prefix="c" uri="jakarta.tags.core" %>
         });
       };
 
-      (() => {
-        const toastElList = [].slice.call(document.querySelectorAll(".toast"));
+      /**
+       * トースト表示
+       * @returns {callback}
+       */
+      const showToast = () => {
         const toastList = toastElList.map((toastEl) => {
           return new bootstrap.Toast(toastEl, {
             delay: 5000,
             autohide: true,
           });
         });
-        const callback = () => {
+        return () => {
           toastList[0].show();
         };
+      }
+
+      /**
+       * ページ読み込みスクリプト
+       */
+      (() => {
+        const callback = showToast();
         validateOnLoad(callback);
         validateOnSubmit();
-        createTable();
+        createItemTable();
       })();
     </script>
   </body>

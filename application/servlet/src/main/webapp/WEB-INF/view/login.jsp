@@ -81,7 +81,7 @@ taglib prefix="c" uri="jakarta.tags.core" %>
               class="btn-close btn-close-white"
               data-bs-dismiss="toast"
             ></button>
-            <div id="errorMessage" class="toast-body" />
+            <div id="errorMessage" class="toast-body"></div>
           </div>
         </div>
       </div>
@@ -92,6 +92,10 @@ taglib prefix="c" uri="jakarta.tags.core" %>
       crossorigin="anonymous"
     ></script>
     <script>
+      /**
+       * メール妥当性チェック
+       * @returns {boolean}
+       */
       const isValidEmail = () => {
         const email = document.getElementById("email");
         if (email.validity.valid) {
@@ -102,6 +106,10 @@ taglib prefix="c" uri="jakarta.tags.core" %>
         return false;
       };
 
+      /**
+       * パスワード妥当性チェック
+       * @returns {boolean}
+       */
       const isValidPassword = () => {
         const password = document.getElementById("password");
         if (password.validity.valid) {
@@ -112,6 +120,10 @@ taglib prefix="c" uri="jakarta.tags.core" %>
         return false;
       };
 
+      /**
+       * オンロード時検証
+       * @param callback
+       */
       const validateOnLoad = (callback) => {
         const errorMessage = '<%=request.getAttribute("errorMessage") %>';
         const errorMessageEl = document.getElementById("errorMessage");
@@ -123,6 +135,9 @@ taglib prefix="c" uri="jakarta.tags.core" %>
         });
       };
 
+      /**
+       * メール検証
+       */
       const validateEmail = () => {
         const email = document.getElementById("email");
         email.addEventListener("input", () => {
@@ -130,6 +145,9 @@ taglib prefix="c" uri="jakarta.tags.core" %>
         });
       };
 
+      /**
+       * パスワード検証
+       */
       const validatePassword = () => {
         const password = document.getElementById("password");
         password.addEventListener("input", () => {
@@ -137,6 +155,9 @@ taglib prefix="c" uri="jakarta.tags.core" %>
         });
       };
 
+      /**
+       * サブミット時検証
+       */
       const validateOnSubmit = () => {
         const form = document.getElementById("login_form");
         form.addEventListener("submit", (event) => {
@@ -148,17 +169,27 @@ taglib prefix="c" uri="jakarta.tags.core" %>
         });
       };
 
-      (() => {
-        const toastElList = [].slice.call(document.querySelectorAll(".toast"));
+      /**
+       * トースト表示
+       * @returns {callback}
+       */
+      const showToast = () => {
         const toastList = toastElList.map((toastEl) => {
           return new bootstrap.Toast(toastEl, {
             delay: 5000,
             autohide: true,
           });
         });
-        const callback = () => {
+        return () => {
           toastList[0].show();
         };
+      }
+
+      /**
+       * ページ読み込みスクリプト
+       */
+      (() => {
+        const callback = showToast();
         validateOnLoad(callback);
         validateEmail();
         validatePassword();

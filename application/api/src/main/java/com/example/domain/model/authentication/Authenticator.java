@@ -1,5 +1,6 @@
 package com.example.domain.model.authentication;
 
+import com.example.domain.model.authentication.exception.AuthenticationFailureException;
 import com.example.domain.model.user.PasswordEncodable;
 import com.example.domain.model.user.User;
 
@@ -16,11 +17,11 @@ public class Authenticator {
 
   public void authenticate(String rawPassword) {
     if (!user.exists()) {
-      throw new UserAuthenticationException("ユーザーが見つかりません");
+      throw new AuthenticationFailureException("ユーザーが見つかりません");
     }
     String passwordValue = user.password().value();
     if (!passwordEncodable.matches(rawPassword, passwordValue)) {
-      throw new UserAuthenticationException("認証に失敗しました");
+      throw new AuthenticationFailureException("認証に失敗しました");
     }
   }
 }

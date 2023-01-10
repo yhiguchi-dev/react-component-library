@@ -1,6 +1,6 @@
 package com.example.servlet.presentation.login;
 
-import com.example.domain.model.authentication.UserAuthenticationException;
+import com.example.domain.model.authentication.exception.AuthenticationFailureException;
 import com.example.domain.model.user.PasswordEncodable;
 import com.example.domain.model.user.User;
 import com.example.domain.model.user.UserRepository;
@@ -47,7 +47,7 @@ public class LoginServlet extends HttpServlet implements ViewForwardable, ViewRe
       HttpSession session = request.getSession(true);
       session.setAttribute("userIdentifier", authenticatedUser.userIdentifier().value());
       redirect("home", request, response);
-    } catch (UserAuthenticationException e) {
+    } catch (AuthenticationFailureException e) {
       request.setAttribute("errorMessage", "ログインに失敗しました");
       forward("login", request, response);
     }
