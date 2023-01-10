@@ -1,6 +1,6 @@
 package com.example.springboot.presentation.config;
 
-import com.example.domain.model.authentication.UserAuthenticationException;
+import com.example.domain.model.authentication.exception.AuthenticationFailureException;
 import com.example.domain.model.user.User;
 import com.example.springboot.application.service.PasswordAuthenticationService;
 import java.util.List;
@@ -32,7 +32,7 @@ public class UserAuthenticationProvider implements AuthenticationProvider {
         User authenticatedUser = passwordAuthenticationService.authenticate(username, password);
         return UsernamePasswordAuthenticationToken.authenticated(
             authenticatedUser.userIdentifier().value(), password, List.of(Authority.USER));
-      } catch (UserAuthenticationException e) {
+      } catch (AuthenticationFailureException e) {
         log.warn(e.getMessage());
         throw new BadCredentialsException("認証に失敗しました", e);
       }

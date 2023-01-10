@@ -1,5 +1,6 @@
 package com.example.domain.model.purchase;
 
+/** 住所 */
 public class Address {
   String zipCode;
   String prefecture;

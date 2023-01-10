@@ -1,5 +1,6 @@
 package com.example.query;
 
+/** 1ページ数 */
 public class PerPage {
   int value;
 

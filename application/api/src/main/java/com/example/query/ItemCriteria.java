@@ -1,5 +1,6 @@
 package com.example.query;
 
+/** 商品検索条件 */
 public class ItemCriteria {
   String itemName;
 

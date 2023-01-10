@@ -1,5 +1,6 @@
 package com.example.domain.model.item;
 
+/** 商品名 */
 public class ItemName {
   String value;
 
