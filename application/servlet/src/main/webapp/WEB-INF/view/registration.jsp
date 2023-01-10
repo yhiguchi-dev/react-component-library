@@ -88,7 +88,7 @@ taglib prefix="c" uri="jakarta.tags.core" %>
             <input
               class="form-check-input"
               type="checkbox"
-              onclick="passwordHideOrShow()"
+              onclick="showOrHidePassword()"
               id="passwordCheckbox"
             />
             <label class="form-check-label" for="passwordCheckbox">
@@ -207,7 +207,7 @@ taglib prefix="c" uri="jakarta.tags.core" %>
         });
       };
 
-      const passwordHideOrShow = () => {
+      const showOrHidePassword = () => {
         const password = document.getElementById("password");
         const passwordConfirmation = document.getElementById(
           "passwordConfirmation"
