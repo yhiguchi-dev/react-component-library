@@ -289,7 +289,7 @@ taglib prefix="c" uri="jakarta.tags.core" %>
         return () => {
           toastList[0].show();
         };
-      }
+      };
 
       /**
        * ページ読み込みスクリプト
