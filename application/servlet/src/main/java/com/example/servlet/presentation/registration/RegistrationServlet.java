@@ -30,7 +30,7 @@ public class RegistrationServlet extends HttpServlet implements ViewForwardable,
   public void init(ServletConfig config) {
     UserRepository userRepository = new UserDataSource(new DatabaseAccessor());
     PasswordEncodable passwordEncodable = new MyPasswordEncoder();
-    UserService userService = new UserService(userRepository, passwordEncodable);
+    UserService userService = new UserService(userRepository);
     this.userRegistrationService = new UserRegistrationService(userService, passwordEncodable);
   }
 

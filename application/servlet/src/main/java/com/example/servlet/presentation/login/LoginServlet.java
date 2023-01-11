@@ -26,7 +26,7 @@ public class LoginServlet extends HttpServlet implements ViewForwardable, ViewRe
   public void init(ServletConfig config) {
     UserRepository userRepository = new UserDataSource(new DatabaseAccessor());
     PasswordEncodable passwordEncodable = new MyPasswordEncoder();
-    UserService userService = new UserService(userRepository, passwordEncodable);
+    UserService userService = new UserService(userRepository);
     this.passwordAuthenticationService =
         new PasswordAuthenticationService(userService, passwordEncodable);
   }

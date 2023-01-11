@@ -4,11 +4,9 @@ import com.example.domain.model.user.*;
 
 public class UserService {
   UserRepository userRepository;
-  PasswordEncodable passwordEncodable;
 
-  public UserService(UserRepository userRepository, PasswordEncodable passwordEncodable) {
+  public UserService(UserRepository userRepository) {
     this.userRepository = userRepository;
-    this.passwordEncodable = passwordEncodable;
   }
 
   public void register(User user) {

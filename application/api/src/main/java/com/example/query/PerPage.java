@@ -8,8 +8,6 @@ public class PerPage {
     this.value = value;
   }
 
-  public PerPage() {}
-
   public int value() {
     return value;
   }

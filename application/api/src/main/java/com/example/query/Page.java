@@ -8,8 +8,6 @@ public class Page {
     this.value = value;
   }
 
-  public Page() {}
-
   public int value() {
     return value;
   }
